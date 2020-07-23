@@ -28,6 +28,7 @@
     - [Add-ToolConfig](#add-toolconfig)
     - [Update-Config](#update-config)
     - [Invoke-ScheduledTask](#invoke-scheduledtask)
+  - [Detailed Documentation](/docs)
 
 
 # AutomationTools
@@ -114,6 +115,7 @@ $Config = Get-Config
 Any changes to the config after this point will require `Get-Config` be called again as this is a snapshot of the living config inside AutomationTools.
 
 ## Write-Log
+[Details](/docs/Write-Log.md)
 `Write-Log` is a single-point of communication between an automation and various external publishing sources. It is intended to unify output across various locations for quick diagnosis, error capture, and reporting.
 
 ### Anatomy
@@ -230,12 +232,14 @@ Add-Secret -Name "CredentialSetName" -Credential $Credential
 This will create a username/secure string pair in the root of the calling script or console named `secrets.json`. These credentials can only be used on the origin box by the origin user.
 
 ### Get-Secret
+[Details](/docs/Get-Secret.md)
 ```powershell
 $Credentials = Get-Secret -Name "CredentialSetName"
 ```
 This will get a username/secure string pair in the root of the calling script or console named `secrets.json`. These credentials can only be retrieved on the origin box by the origin user.
 
 ### Remove-Secret
+[Details](/docs/Remove-Secret.md)
 ```powershell
 Remove-Secret -Name "CredentialSetName"
 ```
@@ -245,18 +249,21 @@ This will remove the username/secure string pair from the secrets.json file.
 AutomationTools has a few file management tools used to remove the thought process behind nested folders not existing. These tools are simple but reduce some repeat code.
 
 ### Resolve-Folder
+[Details](/docs/Resolve-Folder.md)
 ```powershell
 Resolve-Folder -Path "C:\Test\Folder\Location"
 ```
 Tests if the folder structure exists, and creates it if it does not. This is recursive
 
 ### Resolve-File
+[Details](/docs/Resolve-File.md)
 ```powershell
 Resolve-File -Path "C:\Test\Folder\Location\testFile.txt"
 ```
 Tests if the file exists, and creates it if it does not. This is recursive
 
 ### Test-FolderWrite
+[Details](/docs/Test-FolderWrite.md)
 ```powershell
 Test-FolderWrite -Path "C:\TestFolder"
 ```
@@ -266,18 +273,21 @@ Tests if the current user has write permission to the specified folder. The test
 A few common conversion tools for use in general scripts
 
 ### ConvertTo-Version
+[Details](/docs/ConvertTo-Version.md)
 ```powershell
 "1.0.0.1" | ConvertTo-Version
 ```
 Outputs a `Version` object, useful for quickly comparing different versions levels of various softwares or files
 
 ### Convert-HashToPSObject
+[Details](/docs/Convert-HashToPSObject.md)
 ```powershell
 $Hash | Convert-HashToPSObject
 ```
 Outputs a `PSObject` given a standard hash. It will preserve nesting
 
 ### Convert-ArrayToScriptBlock
+[Details](/docs/Convert-ArrayToScriptBlock.md)
 ```powershell
 $Array = @(
             "netstat",
@@ -291,6 +301,7 @@ Outputs a `ScriptBlock` given a standard array. This is useful in mocking `Invok
 A small collection of general purpose utilities
 
 ### Copy-PSObject
+[Details](/docs/Copy-PSObject.md)
 ```powershell
 [PSObject]$Template
 $NewObj = $Template | Copy-PSObject
@@ -298,24 +309,28 @@ $NewObj = $Template | Copy-PSObject
 Returns a copy of the given `PSObject`. Generally assigning a `PSObject` to two variables creates a reference and not a new object
 
 ### Test-Elevation
+[Details](/docs/Test-Elevation.md)
 ```powershell
 Test-Elevation
 ```
 Returns a `bool` of the current user's administration status. The principal to check can be overwritten with `-RoleOverride`
 
 ### Add-ToolConfig
+[Details](/docs/Add-ToolConfig.md)
 ```powershell
 Add-ToolConfig -Path "C:\Path\To\New\Config.json"
 ```
 Adds contents of the json file into AutomationTools config
 
 ### Update-Config
+[Details](/docs/Update-Config.md)
 ```powershell
 Update-Config -Name "TestAdd" -Value "TestValue"
 ```
 Adds an ad-hawk config element to the AutomationTools config variable
 
 ### Invoke-ScheduledTask
+[Details](/docs/Invoke-ScheduledTask.md)
 ```powershell
 Invoke-ScheduledTask -TaskName "Test" -ComputerName "TargetComputer"
 ```
