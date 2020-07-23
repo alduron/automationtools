@@ -109,7 +109,6 @@ $Config = Get-Config
 
 For normal operation use:
 ```powershell
-Add-ToolConfig -Path "C:\Path\To\New\config.json"
 $Config = Get-Config
 ```
 Any changes to the config after this point will require `Get-Config` be called again as this is a snapshot of the living config inside AutomationTools.
