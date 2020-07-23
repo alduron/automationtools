@@ -205,6 +205,7 @@ Outputs directly to Event Log with source in `$Config.EventSource` with Event ID
 Write-Log -Message "Example Message" -Type INF -EventLog -Source "NewSource" -EventID 9001
 ```
 Outputs directly to Event Log with source `NewSource` and Event ID `9001`
+
 **NOTE**: You must have elevated privileges to create a new source in the Event Log
 
 ```powershell
@@ -221,17 +222,18 @@ For general script testing purposes credentials are often required. AutomationTo
 **NOTE**: It is important to add an ignore rule for secrets.json inside gitignore
 
 ### Add-Secret
+[Details](blob/master/docs/Add-Secret.md)
 ```powershell
 $Credential = Get-Credential
-Add-Secret -Name "CredentialSetName" -Credential $Credentail
+Add-Secret -Name "CredentialSetName" -Credential $Credential
 ```
-This will create a username/secure string pair in the root of the calling script or console named `secrets.json`. These credentails can only be used on the origin box by the origin user.
+This will create a username/secure string pair in the root of the calling script or console named `secrets.json`. These credentials can only be used on the origin box by the origin user.
 
 ### Get-Secret
 ```powershell
-$Credentails = Get-Secret -Name "CredentialSetName"
+$Credentials = Get-Secret -Name "CredentialSetName"
 ```
-This will get a username/secure string pair in the root of the calling script or console named `secrets.json`. These credentails can only be retrieved on the origin box by the origin user.
+This will get a username/secure string pair in the root of the calling script or console named `secrets.json`. These credentials can only be retrieved on the origin box by the origin user.
 
 ### Remove-Secret
 ```powershell

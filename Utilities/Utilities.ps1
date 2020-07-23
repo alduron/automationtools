@@ -183,6 +183,7 @@ Function Add-ToolConfig{
     .NOTES
     Must be a JSON config file
     #>
+    [OutputType([Object[]])]
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$True,ValueFromPipeline=$True)]
