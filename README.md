@@ -1,7 +1,7 @@
 - [AutomationTools](#automationtools)
   - [Purpose](#purpose)
   - [Config](#config)
-    - [config.json files](#config-json-files)
+    - [config.json files](#configjson-files)
     - [Reserved Config Names](#reserved-config-names)
     - [Usage](#usage)
   - [Write-Log](#write-log)
