@@ -116,6 +116,7 @@ Any changes to the config after this point will require `Get-Config` be called a
 
 ## Write-Log
 [Details](/docs/Write-Log.md)
+
 `Write-Log` is a single-point of communication between an automation and various external publishing sources. It is intended to unify output across various locations for quick diagnosis, error capture, and reporting.
 
 ### Anatomy
