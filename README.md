@@ -101,6 +101,13 @@ There are several defaults that automationtools uses that can be easily overwrit
 ### Usage
 Module root config loading happens automatically at time of import. Script-level config load happens simply by calling the module's `Get-Config` function. Additional config files should be loaded prior to calling `Get-Config` by calling the `Add-ToolConfig` function.
 
+If you're adding a third or additional config file:
+```powershell
+Add-ToolConfig -Path "C:\Path\To\New\config.json"
+$Config = Get-Config
+```
+
+For normal operation use:
 ```powershell
 Add-ToolConfig -Path "C:\Path\To\New\config.json"
 $Config = Get-Config
