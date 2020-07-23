@@ -222,7 +222,7 @@ For general script testing purposes credentials are often required. AutomationTo
 **NOTE**: It is important to add an ignore rule for secrets.json inside gitignore
 
 ### Add-Secret
-[Details](blob/master/docs/Add-Secret.md)
+[Details](/docs/Add-Secret.md)
 ```powershell
 $Credential = Get-Credential
 Add-Secret -Name "CredentialSetName" -Credential $Credential
