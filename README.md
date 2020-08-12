@@ -234,7 +234,7 @@ Sending email reports is sometimes a necessary evil. Some base-level convenience
 ```powershell
 Send-JobReport -To "testemail@testdomain.com" -Subject "This is a test report" -Pretty
 ```
-![EmailReporting](https://user-images.githubusercontent.com/6700545/90042198-fc53b600-dc8f-11ea-8eb5-4d93b3a8d23e.png)
+![EmailReporting](https://user-images.githubusercontent.com/6700545/90046821-974f8e80-dc96-11ea-82da-88cf488d458b.png)
 
 Row highlighting is automatically included when using the `-Pretty` switch. Behind the scenes this uses the Row and Cell match flags from the table conversion and templating section below.
 
