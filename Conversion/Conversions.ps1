@@ -73,7 +73,13 @@ Function Convert-ArrayListToHTMLTable {
         }
         $Fragments += "</tr>"
 
+        $RowCounter = 0
         Foreach ($Row in $List) {
+            if ($RowCounter%2 -eq 0){
+                $ColorClass = "even-table-color"
+            } else {
+                $ColorClass = "odd-table-color"
+            }
             $RawData = $Row.psobject.properties.value
             switch -regex ($RawData) {
                 $FailRowMatch {
@@ -89,7 +95,7 @@ Function Convert-ArrayListToHTMLTable {
                     break
                 }
                 default {
-                    $Fragments += "<tr>"
+                    $Fragments += "<tr class=`"$ColorClass`">"
                     break
                 }
             }
@@ -116,6 +122,7 @@ Function Convert-ArrayListToHTMLTable {
                 $Fragments += $TDTemplate -f $Class, [String]$Row.$Name
             }
             $Fragments += "</tr>"
+            $RowCounter++
         }
         $Fragments += "</table>"
     }
