@@ -239,9 +239,9 @@ Send-JobReport -To "testemail@testdomain.com" -Subject "This is a test report" -
 Row highlighting is automatically included when using the `-Pretty` switch. Behind the scenes this uses the Row and Cell match flags from the table conversion and templating section below.
 
 ### Table Conversion and Templating
-[Details](/docs/Convert-ArrayListToHTMLTable.md)
-[Details](/docs/Add-TablesToHTMLJobTemplate.md)
-[Details](/docs/Send-HTMLEmail.md)
+[Convert-ArrayListToHTML Details](/docs/Convert-ArrayListToHTMLTable.md)
+[Add-TablesToHTMLJobTemplate Details](/docs/Add-TablesToHTMLJobTemplate.md)
+[Send-HTMLEmail Details](/docs/Send-HTMLEmail.md)
 ```powershell
 $Tables = New-Object System.Collections.Generic.List[PSCustomObject]
 $Table1 = Convert-ArrayListToHTMLTable -List $TestData1 -TableName "Foods" -WarnRowMatch "1|3" -FailRowMatch "3" -FailCellMatch "Cookies 6" -Limit 10
