@@ -256,12 +256,12 @@ Send-HTMLEmail -HTMLData ($Template | Out-String) -Subject "Testing" -To "testem
 ![HighlightingExample](https://user-images.githubusercontent.com/6700545/90042737-b1866e00-dc90-11ea-8b41-ed45cd394cc6.png)
 
 `Convert-ArrayListToHTMLTable` now supports conditional formatting with regex row and cell matching via the following commands
-`FailRowMatch` - Scans the row for regex match and fails the entire row based on match conditions
-`SuccessRowMatch` - Scans the row for regex match and succeeds the entire row based on match conditions
-`WarnRowMatch` - Scans the row for regex match and warns the entire row based on match conditions
-`FailCellMatch` - Scans each cell for regex match and fails the individual cell based on match conditions
-`SuccessCellMatch` - Scans each cell for regex match and succeeds the individual cell based on match conditions
-`WarnCellMatch` - Scans each cell for regex match and warns the individual cell based on match conditions
+* `FailRowMatch` - Scans the row for regex match and fails the entire row based on match conditions
+* `SuccessRowMatch` - Scans the row for regex match and succeeds the entire row based on match conditions
+* `WarnRowMatch` - Scans the row for regex match and warns the entire row based on match conditions
+* `FailCellMatch` - Scans each cell for regex match and fails the individual cell based on match conditions
+* `SuccessCellMatch` - Scans each cell for regex match and succeeds the individual cell based on match conditions
+* `WarnCellMatch` - Scans each cell for regex match and warns the individual cell based on match conditions
 
 ## Secrets
 **Config Controls**
