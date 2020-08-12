@@ -240,7 +240,9 @@ Row highlighting is automatically included when using the `-Pretty` switch. Behi
 
 ### Table Conversion and Templating
 [Convert-ArrayListToHTML Details](/docs/Convert-ArrayListToHTMLTable.md)
+
 [Add-TablesToHTMLJobTemplate Details](/docs/Add-TablesToHTMLJobTemplate.md)
+
 [Send-HTMLEmail Details](/docs/Send-HTMLEmail.md)
 ```powershell
 $Tables = New-Object System.Collections.Generic.List[PSCustomObject]
