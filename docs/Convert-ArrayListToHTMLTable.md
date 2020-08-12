@@ -13,8 +13,9 @@ Converts an array list to a HTML table
 ## SYNTAX
 
 ```
-Convert-ArrayListToHTMLTable [-ArrayList] <ArrayList> [[-TableName] <String>] [-AsCustomObject]
- [[-Limit] <Int32>] [<CommonParameters>]
+Convert-ArrayListToHTMLTable [-List] <Object> [[-TableName] <String>] [[-FailRowMatch] <Regex>]
+ [[-SuccessRowMatch] <Regex>] [[-WarnRowMatch] <Regex>] [[-FailCellMatch] <Regex>]
+ [[-SuccessCellMatch] <Regex>] [[-WarnCellMatch] <Regex>] [[-Limit] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,11 +30,11 @@ Convert-ArrayListToHTMLTable -ArrayList $List -AsCustomObject
 
 ## PARAMETERS
 
-### -ArrayList
-The list that will be converted to a HTML table
+### -List
+{{ Fill List Description }}
 
 ```yaml
-Type: ArrayList
+Type: Object
 Parameter Sets: (All)
 Aliases:
 
@@ -59,23 +60,98 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AsCustomObject
-Return the HTML table as a PSCustomObject
+### -FailRowMatch
+A regex string for detecting a failure condition for an entire row
 
 ```yaml
-Type: SwitchParameter
+Type: Regex
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SuccessRowMatch
+A regex string for detecting a success condition for an entire row
+
+```yaml
+Type: Regex
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WarnRowMatch
+A regex string for detecting a warn condition for an entire row
+
+```yaml
+Type: Regex
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FailCellMatch
+A regex string for detecting a failure condition for an individual cell
+
+```yaml
+Type: Regex
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SuccessCellMatch
+A regex string for detecting a success condition for an individual cell
+
+```yaml
+Type: Regex
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WarnCellMatch
+A regex string for detecting a warn condition for an individual cell
+
+```yaml
+Type: Regex
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Limit
-An upper limit for the maximum amount of records that can be added into the HTML table
+An upper limit for the maximum amount of records that can be added into the HTML table, this iterates top-down
 
 ```yaml
 Type: Int32
@@ -83,7 +159,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 9
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -96,6 +172,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### System.Management.Automation.PSObject
 ## NOTES
 Primarily used for AutomationTools internal email functions
 

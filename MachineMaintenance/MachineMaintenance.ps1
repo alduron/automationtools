@@ -152,7 +152,7 @@ Function Get-PendingReboot {
                 Catch [System.UnauthorizedAccessException] {
                     $CcmStatus = Get-Service -Name CcmExec -ComputerName $Computer -ErrorAction SilentlyContinue
                     If ($CcmStatus.Status -ne 'Running') {
-                        Write-Warning "$Computer`: Error - CcmExec service is not running."
+                        Write-Log -Message "$Computer`: Error - CcmExec service is not running." -Type SYS -Console
                         $CCMClientSDK = $null
                     }
                 }
@@ -162,7 +162,7 @@ Function Get-PendingReboot {
 
                 If ($CCMClientSDK) {
                     If ($CCMClientSDK.ReturnValue -ne 0) {
-                        Write-Warning "Error: DetermineIfRebootPending returned error code $($CCMClientSDK.ReturnValue)"          
+                        Write-Log -Message "Error: DetermineIfRebootPending returned error code $($CCMClientSDK.ReturnValue)" -Type SYS -Console          
                     }
                     If ($CCMClientSDK.IsHardRebootPending -or $CCMClientSDK.RebootPending) {
                         $SCCM = $true
@@ -199,7 +199,7 @@ Function Get-PendingReboot {
 
             }
             Catch {
-                Write-Warning "$Computer`: $_"
+                Write-Log -Message "$Computer`: $_" -Type SYS -Console
                 ## If $ErrorLog, log the file to a user specified location/path
                 If ($ErrorLog) {
                     Out-File -InputObject "$Computer`,$_" -FilePath $ErrorLog -Append
@@ -232,7 +232,7 @@ Function Get-Software {
                         $reg = [microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine', $Computer, 'Registry64') 
                     }
                     Catch { 
-                        Write-Error $_ 
+                        $_ | Write-Log -Message "Error checking registry" -Type ERR -Console 
                         Continue 
                     } 
                     #  Drill down into the Uninstall key using the OpenSubKey Method 
@@ -254,7 +254,7 @@ Function Get-Software {
                                         Try {
                                             $Date = [datetime]::ParseExact($Date, 'yyyyMMdd', $Null)
                                         } Catch {
-                                            Write-Warning "$($Computer): $_ <$($Date)>"
+                                            Write-Log -Message "$($Computer): $_ <$($Date)>" -Type SYS
                                             $Date = $Null
                                         }
                                     } 
@@ -306,7 +306,7 @@ Function Get-Software {
                                     Write-Output $Object
                                 }
                             } Catch {
-                                Write-Warning "$Key : $_"
+                                Write-Log -Message "$Key : $_" -Type SYS -Console
                             }   
                         }
                     } Catch { }   
@@ -314,7 +314,7 @@ Function Get-Software {
                 }                  
             }
             Else {
-                Write-Error  "$($Computer): unable to reach remote system!"
+                Write-Log  "$($Computer): unable to reach remote system!" -Type ERR -Console
             }
         } 
     } 

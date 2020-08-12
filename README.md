@@ -10,6 +10,9 @@
     - [To Console](#to-console)
     - [To Log](#to-log)
     - [To Event Log](#to-event-log)
+  - [Email Reporting](#email-reporting)
+    - [Send-JobReport](#send-jobreport)
+    - [Table Conversion and Templating](#table-conversion-and-templating)
   - [Secrets](#secrets)
     - [Add-Secret](#add-secret) 
     - [Get-Secret](#get-secret) 
@@ -79,7 +82,7 @@ There are several defaults that automationtools uses that can be easily overwrit
 * `SMTPServer` - The server address for SMTP messages
 * `SMTPFrom` - The sending address for SMTP messaages
 * `SMTPPort` - The port to be used with the SMTP server
-* `SMTPUseSSL` - The flag to indicate if SMTP should be using SSL 
+* `SMTPUseSSL` - The flag to indicate if SMTP should be using SSL
 * `TemplatesRoot` - The root location for HTML templates
 * `DefaultJobReportTemplate` - The location of the default Send-JobReport template
 * `HTMLHelpers` - Helpers for replacing content inside HTML templats
@@ -215,6 +218,48 @@ Outputs directly to Event Log with source `NewSource` and Event ID `9001`
 Write-Log -Message "Example Message" -Type INF -Log -Path $Path
 ```
 Outputs directly to Log file located in `$Path`
+
+## Email Reporting
+**Config Controls**
+`SMTPServer`
+`SMTPFrom`
+`SMTPPort`
+`SMTPUseSSL`
+`DefaultJobReportTemplate`
+
+Sending email reports is sometimes a necessary evil. Some base-level convenience tools have been added into AutomationTools in order to speed up the repetitive processes. These tools now include auto-table highlighting, table injection, and formatting.
+
+### Send-JobReport
+[Details](/docs/Send-JobReport.md)
+```powershell
+Send-JobReport -To "testemail@testdomain.com" -Subject "This is a test report" -Pretty
+```
+![EmailReporting](https://user-images.githubusercontent.com/6700545/90042198-fc53b600-dc8f-11ea-8eb5-4d93b3a8d23e.png)
+
+Row highlighting is automatically included when using the `-Pretty` switch. Behind the scenes this uses the Row and Cell match flags from the table conversion and templating section below.
+
+### Table Conversion and Templating
+[Details](/docs/Convert-ArrayListToHTMLTable.md)
+[Details](/docs/Add-TablesToHTMLJobTemplate.md)
+[Details](/docs/Send-HTMLEmail.md)
+```powershell
+$Tables = New-Object System.Collections.Generic.List[PSCustomObject]
+$Table1 = Convert-ArrayListToHTMLTable -List $TestData1 -TableName "Foods" -WarnRowMatch "1|3" -FailRowMatch "3" -FailCellMatch "Cookies 6" -Limit 10
+$Table2 = Convert-ArrayListToHTMLTable -List $TestData2 -TableName "Animals" -SuccessCellMatch "Snake|Hippo 3|Elephant 1" -WarnCellMatch "Hippo 1" -Limit 10
+$Tables.Add($Table1)
+$Tables.Add($Table2)
+$Template = Add-TablesToHTMLJobTemplate -TableList $Tables -Description "This is a description of the email as a whole"
+Send-HTMLEmail -HTMLData ($Template | Out-String) -Subject "Testing" -To "testemail@testdomain.com"
+```
+![HighlightingExample](https://user-images.githubusercontent.com/6700545/90042737-b1866e00-dc90-11ea-8b41-ed45cd394cc6.png)
+
+`Convert-ArrayListToHTMLTable` now supports conditional formatting with regex row and cell matching via the following commands
+`FailRowMatch` - Scans the row for regex match and fails the entire row based on match conditions
+`SuccessRowMatch` - Scans the row for regex match and succeeds the entire row based on match conditions
+`WarnRowMatch` - Scans the row for regex match and warns the entire row based on match conditions
+`FailCellMatch` - Scans each cell for regex match and fails the individual cell based on match conditions
+`SuccessCellMatch` - Scans each cell for regex match and succeeds the individual cell based on match conditions
+`WarnCellMatch` - Scans each cell for regex match and warns the individual cell based on match conditions
 
 ## Secrets
 **Config Controls**

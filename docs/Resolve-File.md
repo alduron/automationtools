@@ -13,7 +13,7 @@ Resolves a file path
 ## SYNTAX
 
 ```
-Resolve-File [-Path] <FileInfo[]> [<CommonParameters>]
+Resolve-File [-Path] <String[]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,7 +33,7 @@ Resolve-File -Path "C:\TestFolder\TestFile.txt"
 The path of the ffile that will be resolved
 
 ```yaml
-Type: FileInfo[]
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 

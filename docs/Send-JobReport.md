@@ -15,7 +15,8 @@ Sends the last job log via SMTP email
 ```
 Send-JobReport [-Subject] <String> [[-To] <String[]>] [[-HTMLData] <Object>] [[-Description] <String>] [-SSL]
  [[-SMTPServer] <String>] [[-From] <String>] [[-Files] <String[]>] [[-Port] <String>]
- [[-Credential] <PSCredential>] [[-TemplateFile] <String>] [-IncludeSYS] [-IncludeVRB] [<CommonParameters>]
+ [[-Credential] <PSCredential>] [[-TemplateFile] <String>] [-IncludeSYS] [-IncludeVRB] [-Pretty]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -214,6 +215,21 @@ Accept wildcard characters: False
 
 ### -IncludeVRB
 An optional parameter to include AutomationTools VRB logs to the job log
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Pretty
+An optional parameter to include color formatting off job log Type field
 
 ```yaml
 Type: SwitchParameter

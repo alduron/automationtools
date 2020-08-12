@@ -18,7 +18,7 @@ InModuleScope automationtools{
                     }
                     $List.Add($Data) | Out-Null
                 }
-                $Result = Convert-ArrayListToHTMLTable -ArrayList $List -AsCustomObject
+                $Result = Convert-ArrayListToHTMLTable -List $List
                 $Result | Should -BeOfType PSCustomObject
                 $Result.TableData | Should -BeLike "*<th>NameOne</th>*"
             }
@@ -34,7 +34,7 @@ InModuleScope automationtools{
                     }
                     $List.Add($Data) | Out-Null
                 }
-                $Result = Convert-ArrayListToHTMLTable -ArrayList $List -AsCustomObject -TableName "NameOfTable"
+                $Result = Convert-ArrayListToHTMLTable -List $List -TableName "NameOfTable"
                 $Result | Should -BeOfType PSCustomObject
                 $Result.TableData | Should -BeLike "*<th>NameOne</th>*"
                 $Result.TableName | Should -Be NameOfTable
@@ -52,7 +52,7 @@ InModuleScope automationtools{
                     }
                     $List.Add($Data) | Out-Null
                 }
-                $Result = Convert-ArrayListToHTMLTable -ArrayList $List -AsCustomObject -Limit 2
+                $Result = Convert-ArrayListToHTMLTable -List $List -Limit 2
                 $Result | Should -BeOfType PSCustomObject
                 ([regex]::Matches($Result.TableData, "<tr>" )).count | Should -Be 3
             }

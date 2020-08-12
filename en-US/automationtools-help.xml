@@ -262,7 +262,16 @@
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
-    <command:returnValues />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
     <maml:alertSet>
       <maml:alert>
         <maml:para>Must be a JSON config file</maml:para>
@@ -295,13 +304,13 @@
       <command:syntaxItem>
         <maml:name>Convert-ArrayListToHTMLTable</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-          <maml:name>ArrayList</maml:name>
+          <maml:name>List</maml:name>
           <maml:Description>
-            <maml:para>The list that will be converted to a HTML table</maml:para>
+            <maml:para>{{ Fill List Description }}</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">ArrayList</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
-            <maml:name>ArrayList</maml:name>
+            <maml:name>Object</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -319,9 +328,81 @@
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>FailRowMatch</maml:name>
+          <maml:Description>
+            <maml:para>A regex string for detecting a failure condition for an entire row</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+          <dev:type>
+            <maml:name>Regex</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>SuccessRowMatch</maml:name>
+          <maml:Description>
+            <maml:para>A regex string for detecting a success condition for an entire row</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+          <dev:type>
+            <maml:name>Regex</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>WarnRowMatch</maml:name>
+          <maml:Description>
+            <maml:para>A regex string for detecting a warn condition for an entire row</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+          <dev:type>
+            <maml:name>Regex</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>FailCellMatch</maml:name>
+          <maml:Description>
+            <maml:para>A regex string for detecting a failure condition for an individual cell</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+          <dev:type>
+            <maml:name>Regex</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>SuccessCellMatch</maml:name>
+          <maml:Description>
+            <maml:para>A regex string for detecting a success condition for an individual cell</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+          <dev:type>
+            <maml:name>Regex</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+          <maml:name>WarnCellMatch</maml:name>
+          <maml:Description>
+            <maml:para>A regex string for detecting a warn condition for an individual cell</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+          <dev:type>
+            <maml:name>Regex</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
           <maml:name>Limit</maml:name>
           <maml:Description>
-            <maml:para>An upper limit for the maximum amount of records that can be added into the HTML table</maml:para>
+            <maml:para>An upper limit for the maximum amount of records that can be added into the HTML table, this iterates top-down</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -330,28 +411,17 @@
           </dev:type>
           <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>AsCustomObject</maml:name>
-          <maml:Description>
-            <maml:para>Return the HTML table as a PSCustomObject</maml:para>
-          </maml:Description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-        <maml:name>ArrayList</maml:name>
+        <maml:name>List</maml:name>
         <maml:Description>
-          <maml:para>The list that will be converted to a HTML table</maml:para>
+          <maml:para>{{ Fill List Description }}</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">ArrayList</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
-          <maml:name>ArrayList</maml:name>
+          <maml:name>Object</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -368,22 +438,82 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>AsCustomObject</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>FailRowMatch</maml:name>
         <maml:Description>
-          <maml:para>Return the HTML table as a PSCustomObject</maml:para>
+          <maml:para>A regex string for detecting a failure condition for an entire row</maml:para>
         </maml:Description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>Regex</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>False</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>SuccessRowMatch</maml:name>
+        <maml:Description>
+          <maml:para>A regex string for detecting a success condition for an entire row</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+        <dev:type>
+          <maml:name>Regex</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>WarnRowMatch</maml:name>
+        <maml:Description>
+          <maml:para>A regex string for detecting a warn condition for an entire row</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+        <dev:type>
+          <maml:name>Regex</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>FailCellMatch</maml:name>
+        <maml:Description>
+          <maml:para>A regex string for detecting a failure condition for an individual cell</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+        <dev:type>
+          <maml:name>Regex</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>SuccessCellMatch</maml:name>
+        <maml:Description>
+          <maml:para>A regex string for detecting a success condition for an individual cell</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+        <dev:type>
+          <maml:name>Regex</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <maml:name>WarnCellMatch</maml:name>
+        <maml:Description>
+          <maml:para>A regex string for detecting a warn condition for an individual cell</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
+        <dev:type>
+          <maml:name>Regex</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
         <maml:name>Limit</maml:name>
         <maml:Description>
-          <maml:para>An upper limit for the maximum amount of records that can be added into the HTML table</maml:para>
+          <maml:para>An upper limit for the maximum amount of records that can be added into the HTML table, this iterates top-down</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -394,7 +524,16 @@
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
-    <command:returnValues />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSObject</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
     <maml:alertSet>
       <maml:alert>
         <maml:para>Primarily used for AutomationTools internal email functions</maml:para>
@@ -2367,9 +2506,9 @@ Cookie Monster - modified these to match netstat output per here:    http://supp
           <maml:Description>
             <maml:para>The path of the ffile that will be resolved</maml:para>
           </maml:Description>
-          <command:parameterValue required="true" variableLength="false">FileInfo[]</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
-            <maml:name>FileInfo[]</maml:name>
+            <maml:name>String[]</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -2382,9 +2521,9 @@ Cookie Monster - modified these to match netstat output per here:    http://supp
         <maml:Description>
           <maml:para>The path of the ffile that will be resolved</maml:para>
         </maml:Description>
-        <command:parameterValue required="true" variableLength="false">FileInfo[]</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
-          <maml:name>FileInfo[]</maml:name>
+          <maml:name>String[]</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -2891,6 +3030,17 @@ Cookie Monster - modified these to match netstat output per here:    http://supp
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Pretty</maml:name>
+          <maml:Description>
+            <maml:para>An optional parameter to include color formatting off job log Type field</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -3043,6 +3193,18 @@ Cookie Monster - modified these to match netstat output per here:    http://supp
         <maml:name>IncludeVRB</maml:name>
         <maml:Description>
           <maml:para>An optional parameter to include AutomationTools VRB logs to the job log</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Pretty</maml:name>
+        <maml:Description>
+          <maml:para>An optional parameter to include color formatting off job log Type field</maml:para>
         </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>

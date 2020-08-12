@@ -1,41 +1,103 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <style>
-            h4 {
-                font-family: "Calibri";
-                font-size: 18pt;
-                color: #003366;
-            }
-            body {
-                font-family: "Calibri";
-                font-size: 11pt;
-                color: #0076b9;
-                vertical-align: middle;
-            }
-            th,td {
-                border: 1px solid #000000;
-                border-collapse: collapse;
-                padding: 5px;
-            }
-            th {
-                font-size: 1.2em;
-                text-align: center;
-                background-color: #0076b9;
-                color: #ffffff;
-            }
-            td {
-                color: #000000;
-            }
-            .even { background-color: #ffffff; }
-            .odd { background-color: #bfbfbfbf; }
-        </style>
-    </head>
-    <body>
-        <p>
-            <!--###DESCRIPTION###-->
-        </p>
-        <!--###TABLEINPUT###-->
-    </body>
+<head>
+    <style>
+        p {
+            margin-bottom: 0;
+        }
+
+        h4 {
+            font-family: "Calibri";
+            font-size: 18pt;
+            color: #003366;
+            margin-bottom: 0;
+        }
+
+        body {
+            font-family: "Calibri";
+            font-size: 11pt;
+            color: #0076b9;
+            vertical-align: middle;
+        }
+
+        tr {
+            background-color: #ffffff;
+        }
+
+        th,
+        td {
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        th {
+            font-size: 1.2em;
+            text-align: center;
+            background-color: #0076b9;
+            color: #ffffff;
+        }
+
+        td {
+            color: #000000;
+        }
+
+        tr.fail td, td.fail {
+            background-color: #C44536;
+        }
+
+        tr.success td, td.success {
+            background-color: #547c54;
+        }
+
+        tr.warn td, td.warn {
+            background-color: #FABC3C;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        tr:hover td {
+            background-color: #bfbfbf;
+        }
+
+        tr.warn:hover td, tr:hover td.warn {
+            background-color: #ac832c;
+        }
+
+        tr.success:hover td, tr:hover td.success {
+            background-color: #314b31;
+        }
+
+        tr.fail:hover td, tr:hover td.fail {
+            background-color: #96382c;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #DFE0E2;
+        }
+
+        .tabledata {
+            overflow-x: auto;
+        }
+
+        footer {
+            color: black;
+            text-align: center;
+            margin-top: 15px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <!--###DESCRIPTION###-->
+    </p>
+    <!--###TABLEINPUT###-->
+</body>
+<footer>
+    <div class="">This message was brought to you by AutomationTools&trade;</div>
+</footer>
 </html>

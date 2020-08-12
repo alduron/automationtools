@@ -240,7 +240,6 @@ Function Update-LogRoot{
     Process{
         $Script:ToolConfig.LogRoot = $Folder
         Write-Log -Message "Updated logging path to [$($Folder)]" -Type INF -Console
-        return $Script:ToolConfig
     }
     END{
     }
@@ -276,7 +275,6 @@ Function Update-LogName{
         Write-Log -Message "[$($MyInvocation.MyCommand)] Called" -Type SYS
         $Script:ToolConfig.LogName = $Name
         Write-Log -Message "Updated log name to [$($Name)]" -Type INF -Console
-        return $Script:ToolConfig
     }
     END{
     }

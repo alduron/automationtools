@@ -65,7 +65,7 @@ Function Resolve-File{
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$True,ValueFromPipeline=$True,ValueFromPipelineByPropertyName=$False)]
-        [System.IO.FileInfo[]]$Path
+        [String[]]$Path
     )
     BEGIN{
         Write-Log -Message "[$($MyInvocation.MyCommand)] Called" -Type SYS

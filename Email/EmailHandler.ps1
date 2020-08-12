@@ -36,12 +36,12 @@ Function Add-TablesToHTMLJobTemplate{
         } else {
             $TemplatePath = $TemplateFile
         }
-        $Fragments = @()
         $HTMLFileData = Get-Content $TemplatePath
     }
     Process{
         Foreach($Table in $TableList){
-            $Fragments += "<div>"
+            $Fragments = @()
+            $Fragments += "<div class=`"tabledata`">"
             $Fragments += "<h4>$($Table.TableName)</h4>"
             $Fragments += $Table.TableData
             $Fragments += "</div>"
@@ -193,6 +193,9 @@ Function Send-JobReport{
     
     .PARAMETER IncludeVRB
     An optional parameter to include AutomationTools VRB logs to the job log
+
+    .PARAMETER Pretty
+    An optional parameter to include color formatting off job log Type field
     
     .EXAMPLE
     Send-JobReport -To "Test@testing.com" -Subject "Testing This" -Description "More Testing"
@@ -216,7 +219,8 @@ Function Send-JobReport{
         [System.Management.Automation.PSCredential]$Credential,
         [String]$TemplateFile,
         [Switch]$IncludeSYS,
-        [Switch]$IncludeVRB
+        [Switch]$IncludeVRB,
+        [Switch]$Pretty
     )
     BEGIN{
         Write-Log -Message "[$($MyInvocation.MyCommand)] Called" -Type SYS
@@ -234,12 +238,16 @@ Function Send-JobReport{
         }
 
         $TableSplat = @{
-            ArrayList = Get-LogHistory @HistorySplat
-            AsCustomObject = $True
+            List = Get-LogHistory @HistorySplat
             TableName = "Job Log"
         }
         if($TemplateFile){
             $TableSplat.Add("TemplateFile",$TemplateFile)
+        }
+        if($Pretty){
+            $TableSplat.Add("FailRowMatch","ERR")
+            $TableSplat.Add("WarnRowMatch","WRN|DIS")
+            $TableSplat.Add("SuccessRowMatch","CON")
         }
 
         if(!$HTMLData){

@@ -1,4 +1,4 @@
-Function Convert-ArrayListToHTMLTable{
+Function Convert-ArrayListToHTMLTable {
     <#
     .SYNOPSIS
     Converts an array list to a HTML table
@@ -12,67 +12,118 @@ Function Convert-ArrayListToHTMLTable{
     .PARAMETER TableName
     An optional table name to be injected into the data table
     
-    .PARAMETER AsCustomObject
-    Return the HTML table as a PSCustomObject
-    
     .PARAMETER Limit
-    An upper limit for the maximum amount of records that can be added into the HTML table
+    An upper limit for the maximum amount of records that can be added into the HTML table, this iterates top-down
+
+    .PARAMETER FailRowMatch
+    A regex string for detecting a failure condition for an entire row
+
+    .PARAMETER SuccessRowMatch
+    A regex string for detecting a success condition for an entire row
+
+    .PARAMETER WarnRowMatch
+    A regex string for detecting a warn condition for an entire row
     
+    .PARAMETER FailCellMatch
+    A regex string for detecting a failure condition for an individual cell
+
+    .PARAMETER SuccessCellMatch
+    A regex string for detecting a success condition for an individual cell
+
+    .PARAMETER WarnCellMatch
+    A regex string for detecting a warn condition for an individual cell
+
     .EXAMPLE
     Convert-ArrayListToHTMLTable -ArrayList $List -AsCustomObject
     
     .NOTES
     Primarily used for AutomationTools internal email functions
     #>
+    [OutputType([PSObject])]
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$True,ValueFromPipeline=$False)]
-        [System.Collections.ArrayList]$ArrayList,
+        [Parameter(Mandatory = $True, ValueFromPipeline = $False)]
+        $List,
         [String]$TableName,
-        [Parameter(Mandatory=$False,ValueFromPipeline=$False)]
-        [Switch]$AsCustomObject,
+        [Parameter(Mandatory = $False, ValueFromPipeline = $False)]
+        [Regex]$FailRowMatch,
+        [Regex]$SuccessRowMatch,
+        [Regex]$WarnRowMatch,
+        [Regex]$FailCellMatch,
+        [Regex]$SuccessCellMatch,
+        [Regex]$WarnCellMatch,
         [Int]$Limit
     )
-    BEGIN{
+    BEGIN {
         Write-Log -Message "[$($MyInvocation.MyCommand)] Called" -Type SYS
-        $Names = @()
-        Foreach($NoteProperties in $ArrayList[0].PSObject.Properties){
-            $Names += $NoteProperties.Name
-        }
-        $Table = New-Object System.Data.DataTable "$TableName"
-        Foreach($Name in $Names){
-            $Column = New-Object System.Data.DataColumn "$($Name)",([String])
-            $Table.Columns.Add($Column)
+        $Names = $List[0].psobject.properties.Name
+        $THTemplate = "<th>{0}</th>"
+        $TDTemplate = "<td{0}>{1}</td>"
+        $Fragments = @()
+        if($Limit){
+            $End = $Limit -1
+            $List = $List[0..$End]
         }
     }
-    PROCESS{
-        $I = 0
-        Foreach($Element in $ArrayList){
-            $Row = $Table.NewRow()
-            Foreach($Name in $Names){
-                $Row."$Name" = ($Element.$Name)
-            }
-            if($Limit){
-                if($I -lt $Limit){
-                    $Table.Rows.Add($Row)
+    PROCESS {
+        $Fragments += "<table>"
+        $Fragments += "<tr>"
+        Foreach ($Name in $Names) {
+            $Fragments += $THTemplate -f [String]$Name
+        }
+        $Fragments += "</tr>"
+
+        Foreach ($Row in $List) {
+            $RawData = $Row.psobject.properties.value
+            switch -regex ($RawData) {
+                $FailRowMatch {
+                    $Fragments += "<tr class=`"fail`">"
+                    break
                 }
-                $I++
-            } else {
-                $Table.Rows.Add($Row)
+                $WarnRowMatch {
+                    $Fragments += "<tr class=`"warn`">"
+                    break
+                }
+                $SuccessRowMatch {
+                    $Fragments += "<tr class=`"success`">"
+                    break
+                }
+                default {
+                    $Fragments += "<tr>"
+                    break
+                }
             }
+    
+            Foreach ($Name in $Names) {
+                Switch -regex ($Row.$Name) {
+                    $FailCellMatch {
+                        $Class = " class=`"fail`""
+                        break
+                    }
+                    $WarnCellMatch {
+                        $Class = " class=`"warn`""
+                        break
+                    }
+                    $SuccessCellMatch {
+                        $Class = " class=`"success`""
+                        break
+                    }
+                    default {
+                        $Class = $null
+                        break
+                    }
+                }
+                $Fragments += $TDTemplate -f $Class, [String]$Row.$Name
+            }
+            $Fragments += "</tr>"
         }
+        $Fragments += "</table>"
     }
-    END{
-        [String]$HTMLTable = $Table | Select-Object -Property $Names | ConvertTo-Html -Fragment
-        if($AsCustomObject){
-            $Return = [PSCustomObject]@{
-                TableName = $TableName
-                TableData = $HTMLTable
-            }
-        } else {
-            $Return = $HTMLTable
+    END {
+        [PSCustomObject]@{
+            TableName = $TableName
+            TableData = $Fragments | Out-String
         }
-        return $Return
     }
 }
 

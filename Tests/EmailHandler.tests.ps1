@@ -20,7 +20,7 @@ InModuleScope automationtools{
                     }
                     $List.Add($SubData) | Out-Null
                 }
-                $Table = Convert-ArrayListToHTMLTable -TableName "Testing" -ArrayList $List -AsCustomObject
+                $Table = Convert-ArrayListToHTMLTable -TableName "Testing" -List $List
                 $Result = Add-TablesToHTMLJobTemplate -TableList $Table
                 $Result.GetType() | Should -BeOfType Object
             }
