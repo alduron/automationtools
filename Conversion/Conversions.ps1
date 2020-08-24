@@ -80,7 +80,7 @@ Function Convert-ArrayListToHTMLTable {
             } else {
                 $ColorClass = "odd-table-color"
             }
-            $RawData = $Row.psobject.properties.value
+            $RawData = $Row.psobject.properties.value -join "|&|"
             switch -regex ($RawData) {
                 $FailRowMatch {
                     $Fragments += "<tr class=`"fail`">"
