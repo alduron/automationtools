@@ -105,6 +105,7 @@ Function New-ToolConfig([String]$Path){
         ModuleRoot = Split-Path $PSScriptRoot -Parent
         LogRoot = "$env:USERPROFILE\Desktop\Logs"
         LogName = "AutomationTools"
+        MaxLogCount = 30000
         EventSource = "AutomationTools"
         SMTPServer = "example.domain.com"
         SMTPFrom = "automationtools@domain.com"

@@ -40,23 +40,6 @@ InModuleScope automationtools{
                 $Result.TableName | Should -Be NameOfTable
             }
         }
-
-        Context "When user requests PSObject and A custom Table Name" {
-            It "Should write host and return a PSObject" {
-                $List = New-Object System.Collections.ArrayList
-                Foreach($Item in 1..3){
-                    $Data = [PSCustomObject]@{
-                        NameOne = "Test"
-                        NameTwo = "Test"
-                        NameThree = "Test"
-                    }
-                    $List.Add($Data) | Out-Null
-                }
-                $Result = Convert-ArrayListToHTMLTable -List $List -Limit 2
-                $Result | Should -BeOfType PSCustomObject
-                ([regex]::Matches($Result.TableData, "<tr>" )).count | Should -Be 3
-            }
-        }
     }
 
     Describe "ConvertTo-Version" {

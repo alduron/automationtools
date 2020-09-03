@@ -33,6 +33,9 @@ Function Write-ToHistory{
     BEGIN{
     }
     Process{
+        if($Script:LogHistory.Count -gt $Script:ToolConfig.MaxLogCount){
+            $Script:LogHistory = New-Object System.Collections.ArrayList
+        }
         $Script:LogHistory.Add($Content) | Out-Null
     }
     END{
@@ -801,6 +804,7 @@ Function Write-Log{
     BEGIN{
     }
     Process{
+        $Keys = $PSCmdlet.MyInvocation.BoundParameters.Keys
         Switch($Type){
             "SYS"{
                 Switch($True){
@@ -843,7 +847,6 @@ Function Write-Log{
 
         }
 
-        $Keys = $PSCmdlet.MyInvocation.BoundParameters.Keys
         if(!($Type -match "SYS|VRB")){
             if($Script:ToolConfig.DefaultToConsole){
                 $Console = $True

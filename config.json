@@ -2,6 +2,7 @@
     "ModuleRoot":"",
     "LogRoot":"",
     "LogName":"",
+    "MaxLogCount":"",
     "EventSource":"",
     "SMTPServer":"",
     "SMTPFrom":"",

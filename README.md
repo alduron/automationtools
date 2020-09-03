@@ -78,6 +78,7 @@ There are several defaults that automationtools uses that can be easily overwrit
 * `ModuleRoot` - The root location of the module
 * `LogRoot` - The root location of the logging location
 * `LogName` - The name of the log file
+* `MaxLogCount` - The maximum amount of logs retained in memory, defaulted to 30,000
 * `EventSource` - The name of the Windows Event Source name
 * `SMTPServer` - The server address for SMTP messages
 * `SMTPFrom` - The sending address for SMTP messaages
@@ -120,7 +121,7 @@ Any changes to the config after this point will require `Get-Config` be called a
 ## Write-Log
 [Details](/docs/Write-Log.md)
 
-`Write-Log` is a single-point of communication between an automation and various external publishing sources. It is intended to unify output across various locations for quick diagnosis, error capture, and reporting.
+`Write-Log` is a single-point of communication between an automation and various external publishing sources. It is intended to unify output across various locations for quick diagnosis, error capture, and reporting. This maintained log is defaulted to 30,000 logs before being rewritten.
 
 ### Anatomy
 The standard output for log information reads as follows
